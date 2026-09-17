@@ -1,0 +1,64 @@
+<!doctype html>
+<html lang="en-AU">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="robots" content="noindex, nofollow, noarchive, nosnippet" />
+    <meta name="referrer" content="no-referrer" />
+    <meta name="theme-color" content="#f4f1ea" />
+    <meta
+      http-equiv="Content-Security-Policy"
+      content="default-src 'self' blob: data:; script-src 'self' 'unsafe-inline'; style-src 'self' 'unsafe-inline'; img-src 'self' blob: data:; media-src blob:; frame-src 'self' blob:; connect-src 'self'; object-src 'none'; base-uri 'self'; form-action 'self'"
+    />
+    <title>Private practice | jspice.au</title>
+    <link rel="stylesheet" href="gate.css" />
+    <script src="gate.js" defer></script>
+  </head>
+
+  <body>
+    <main class="gate" id="gate">
+      <a class="wordmark" href="../">jspice.au</a>
+
+      <section class="gate-card" aria-labelledby="gate-title">
+        <div class="gate-mark" aria-hidden="true">ཨ</div>
+        <p class="eyebrow">Private practice</p>
+        <h1 id="gate-title">Enter the practice room</h1>
+        <p class="gate-copy">
+          This personal practice companion is encrypted. Enter the shared
+          phrase to decrypt it on this device.
+        </p>
+
+        <form id="unlock-form">
+          <label for="practice-password">Password</label>
+          <div class="password-row">
+            <input
+              id="practice-password"
+              name="password"
+              type="password"
+              autocomplete="current-password"
+              autocapitalize="none"
+              spellcheck="false"
+              required
+            />
+            <button class="reveal-button" id="reveal-password" type="button" aria-label="Show password">Show</button>
+          </div>
+          <button class="unlock-button" id="unlock-button" type="submit">Open practice</button>
+        </form>
+
+        <p class="status" id="status" role="status" aria-live="polite">
+          The room locks again when this page is reloaded.
+        </p>
+
+        <noscript>This practice requires JavaScript to decrypt its local materials.</noscript>
+      </section>
+    </main>
+
+    <section class="practice-host" id="practice-host" hidden>
+      <iframe
+        id="practice-frame"
+        title="Private practice companion"
+        sandbox="allow-scripts allow-same-origin allow-popups allow-downloads"
+      ></iframe>
+    </section>
+  </body>
+</html>
