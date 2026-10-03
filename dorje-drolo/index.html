@@ -4,212 +4,57 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <meta name="robots" content="noindex, nofollow, noarchive" />
-    <meta name="theme-color" content="#761f24" />
-    <title>Dorje Drolö Practice</title>
-    <link rel="stylesheet" href="styles.css" />
-    <script src="content.js" defer></script>
-    <script src="app.js" defer></script>
+    <meta name="theme-color" content="#f8f4ed" />
+    <meta name="description" content="Read and listen to the six recorded reflections from the Dorje Drolö foundational practice liturgy." />
+    <title>Dorje Drolö practice | jspice.au</title>
+    <link rel="stylesheet" href="reader.css" />
+    <script src="reader-data.js" defer></script>
+    <script src="reader.js" defer></script>
   </head>
-
   <body>
-    <a class="skip-link" href="#practice">Skip to practice</a>
+    <a class="skip-link" href="#reading">Skip to reading</a>
 
     <header class="site-header">
-      <a class="wordmark" href="./" aria-label="Dorje Drolö Practice home">
-        <span class="wordmark-mark" aria-hidden="true">DD</span>
-        <span>
-          <strong>Dorje Drolö</strong>
-          <small>personal practice companion</small>
-        </span>
-      </a>
-
-      <div class="header-actions">
-        <button class="icon-button" id="theme-toggle" type="button" aria-label="Use dark theme">
-          <span aria-hidden="true">☾</span>
-        </button>
-      </div>
+      <a class="site-home" href="../" aria-label="Back to jspice.au">← jspice.au</a>
+      <button id="text-size" class="quiet-button" type="button" aria-pressed="false">Larger text</button>
     </header>
 
-    <main id="practice">
-      <section class="practice-intro" aria-labelledby="page-title">
-        <div>
-          <p class="eyebrow">The Perfectly Clear Path to Liberation</p>
-          <h1 id="page-title">My practice</h1>
-          <p>Your Dorje Drolö sequence and chant-learning library, with progress saved in this browser.</p>
+    <main id="reading">
+      <header class="liturgy-header">
+        <p class="eyebrow">Dorje Drolö · foundational practice</p>
+        <h1>The Perfectly Clear Path to Liberation</h1>
+        <p>Read and listen to the six recorded reflections. The full liturgy is available below.</p>
+        <a class="source-link" href="media/Dorje%20Drolo%20Ngondro%20Liturgy-Final%20(04-25)2.0-en_US.pdf" target="_blank" rel="noopener">Open complete liturgy (PDF) <span aria-hidden="true">↗</span></a>
+      </header>
+
+      <section class="reading-section" aria-labelledby="section-title">
+        <div class="section-heading">
+          <p id="section-position" class="eyebrow"></p>
+          <h2 id="section-title"></h2>
+          <p id="section-subtitle" class="section-subtitle"></p>
         </div>
-        <div class="document-links" aria-label="Practice documents">
-          <a href="media/Dorje%20Drolo%20Ngondro%20Liturgy-Final%20(04-25)2.0-en_US.pdf" target="_blank" rel="noopener">
-            Open liturgy <span aria-hidden="true">↗</span>
-          </a>
-          <a href="media/POL-NGO-Guide-1-DorjeDrolo-v1.pdf" target="_blank" rel="noopener">
-            Level 1 guide <span aria-hidden="true">↗</span>
-          </a>
-          <a href="media/Tergar%20Daily%20Chants%202026.pdf" target="_blank" rel="noopener">
-            Daily chants <span aria-hidden="true">↗</span>
-          </a>
-          <a href="https://learning.tergar.org/wp-content/uploads/2016/06/Nectar-of-the-Path-v1.pdf" target="_blank" rel="noopener">
-            Nectar source <span aria-hidden="true">↗</span>
-          </a>
-        </div>
+        <div id="verses" class="verses"></div>
+        <button id="return-to-verse" class="return-button" type="button" hidden>Return to current verse</button>
       </section>
 
-      <nav class="view-tabs" aria-label="Practice views">
-        <button class="view-tab is-active" id="practice-tab" type="button" data-view="sequence" aria-selected="true">Practice</button>
-        <button class="view-tab" id="library-tab" type="button" data-view="library" aria-selected="false">Chants</button>
-        <button class="view-tab" id="reader-tab" type="button" data-view="reader" aria-selected="false">Synced text</button>
-      </nav>
-
-      <section class="view-panel sequence-view" id="sequence-view" aria-labelledby="practice-tab">
-        <div class="sequence-column">
-          <header class="panel-heading">
-            <div>
-              <p class="eyebrow">Dorje Drolö routine</p>
-              <h2>Practice order</h2>
-            </div>
-            <div class="progress-copy">
-              <strong id="progress-count">0 of 19</strong>
-              <button class="text-button" id="reset-progress" type="button">Reset</button>
-            </div>
-          </header>
-          <div class="practice-progress" role="progressbar" aria-label="Practice progress" aria-valuemin="0" aria-valuemax="19" aria-valuenow="0">
-            <span id="progress-bar"></span>
-          </div>
-          <ol class="practice-sequence" id="practice-sequence"></ol>
-        </div>
-
-        <aside class="step-panel" id="step-panel" aria-live="polite">
-          <div class="empty-detail">
-            <span class="empty-detail-mark" aria-hidden="true">01</span>
-            <h2>Begin with refuge</h2>
-            <p>Choose a step from your practice order. Recorded chants load into the player; manual practices wait until you continue.</p>
-          </div>
-        </aside>
-      </section>
-
-      <section class="view-panel library-view" id="library-view" aria-labelledby="library-tab" hidden>
-        <aside class="library-sidebar">
-          <div>
-            <p class="eyebrow">Chant library</p>
-            <label for="track-search">Filter recordings</label>
-            <input id="track-search" type="search" placeholder="Search…" autocomplete="off" />
-          </div>
-          <nav id="section-nav" aria-label="Chant sections"></nav>
-        </aside>
-
-        <div class="library-content">
-          <header class="panel-heading">
-            <div>
-              <p class="eyebrow">18 recordings</p>
-              <h2>Chants</h2>
-            </div>
-            <p>Select any recording. The six reflections and four daily chants include synchronised learning text.</p>
-          </header>
-          <div id="track-groups" aria-live="polite"></div>
-        </div>
-      </section>
-
-      <section class="reader view-panel" id="reader" aria-labelledby="reader-tab" hidden>
-        <header class="reader-heading">
-          <div>
-            <p class="eyebrow" id="reader-kicker">Synchronised chant</p>
-            <h2 id="reader-title">First Reflection</h2>
-            <p id="reader-subtitle"></p>
-          </div>
-          <div class="reader-controls">
-            <label>
-              <span>Text</span>
-              <select id="text-layers">
-                <option value="phonetics-english">Phonetics + English</option>
-                <option value="all">Tibetan + phonetics + English</option>
-                <option value="phonetics">Phonetics only</option>
-                <option value="english">English only</option>
-              </select>
-            </label>
-            <label class="check-control">
-              <input id="follow-text" type="checkbox" checked />
-              <span>Follow text</span>
-            </label>
-            <label class="check-control">
-              <input id="pause-after-phrase" type="checkbox" />
-              <span>Pause after phrase</span>
-            </label>
-          </div>
-        </header>
-
-        <div class="reader-status">
-          <span id="reader-source"></span>
-          <span id="reader-review"></span>
-        </div>
-
-        <nav class="reader-track-nav" id="reader-track-nav" aria-label="Synchronised chants"></nav>
-
-        <div class="phrase-list" id="phrase-list"></div>
-
-        <footer class="phrase-controls" aria-label="Phrase controls">
-          <button type="button" id="previous-phrase">← Previous phrase</button>
-          <button type="button" id="repeat-phrase" aria-pressed="false">Repeat phrase</button>
-          <button type="button" id="next-phrase">Next phrase →</button>
-        </footer>
-      </section>
-
-      <section class="practice-tools" aria-labelledby="tools-title">
-        <div class="tool-card counter-card">
-          <p class="eyebrow">Personal counter</p>
-          <h2 id="tools-title">Prostrations</h2>
-          <output id="practice-count" aria-live="polite">0</output>
-          <div class="counter-actions" aria-label="Change prostration count">
-            <button type="button" data-count="1">+1</button>
-            <button type="button" data-count="10">+10</button>
-            <button type="button" data-count="108">+108</button>
-            <button class="quiet-button" id="reset-count" type="button">Reset</button>
-          </div>
-          <p class="tool-note">The counter stays manual and separate from audio repeats.</p>
-        </div>
-
-        <div class="tool-card source-card">
-          <p class="eyebrow">Liturgy source</p>
-          <h2>The Perfectly Clear Path to Liberation</h2>
-          <p>By Khenpo Karma Ratna, version 2.0. Translated by Cortland Dahl and Michele Martin. Tibetan and phonetics by Altaír Peredo.</p>
-          <p>© 2025 Tergar International. Some rights reserved. Creative Commons Attribution-NonCommercial-NoDerivatives 3.0 US.</p>
-          <p><strong>Daily chant source:</strong> <em>Tergar Daily Chants</em>, Tergar Asia Foundation, 22 May 2026 edition.</p>
-        </div>
-      </section>
+      <footer class="source-credit">
+        <p>This text is published as part of Tergar International’s Path of Liberation meditation curriculum, created by Yongey Mingyur Rinpoche.</p>
+        <p>© 2025 Tergar International. Some rights reserved.<br>The Perfectly Clear Path to Liberation, by Khenpo Karma Ratna, version 2.0<br>Translated by Cortland Dahl and Michele Martin. Tibetan and phonetics by Altaír Peredo.</p>
+        <p>This work is published under the Creative Commons Attribution-Noncommercial-No Derivative Works 3.0 United States License. If republishing this work, this copyright statement must be included in its entirety, including the contact information that follows.</p>
+        <p>For more information, please contact:<br>Tergar International<br>info@tergar.org<br>www.tergar.org</p>
+      </footer>
     </main>
 
-    <footer class="player" id="player" aria-label="Audio player">
-      <div class="now-playing">
-        <span class="player-kicker" id="now-section">Choose a recording</span>
-        <strong id="now-title">Nothing selected</strong>
-      </div>
-
-      <div class="transport">
-        <button class="transport-button" id="previous-track" type="button" aria-label="Previous recording">‹</button>
-        <button class="transport-button small" id="rewind" type="button" aria-label="Go back 10 seconds">−10</button>
-        <button class="play-button" id="play-toggle" type="button" aria-label="Play" disabled>▶</button>
-        <button class="transport-button small" id="forward" type="button" aria-label="Go forward 10 seconds">+10</button>
-        <button class="transport-button" id="next-track" type="button" aria-label="Next recording">›</button>
-      </div>
-
-      <div class="timeline">
-        <span id="elapsed">0:00</span>
-        <input id="seek" type="range" min="0" max="100" value="0" step="0.05" aria-label="Recording position" disabled />
-        <span id="duration">0:00</span>
-      </div>
-
-      <div class="player-options">
-        <label>
-          <span>Speed</span>
-          <select id="speed" aria-label="Playback speed">
-            <option value="0.75">0.75×</option>
-            <option value="1" selected>1×</option>
-            <option value="1.25">1.25×</option>
-            <option value="1.5">1.5×</option>
-          </select>
+    <div class="player" aria-label="Audio controls">
+      <div class="player-inner">
+        <label class="section-control" for="section-select">
+          <span>Section</span>
+          <select id="section-select" aria-label="Choose a reflection"></select>
         </label>
+        <button id="play-pause" class="play-button" type="button">Play</button>
       </div>
-
-      <p class="player-message" id="player-message" role="alert" hidden></p>
-      <audio id="audio" preload="metadata"></audio>
-    </footer>
+      <p id="player-status" class="player-status" role="status" aria-live="polite">Ready to play</p>
+    </div>
+    <audio id="recording" preload="metadata"></audio>
   </body>
 </html>

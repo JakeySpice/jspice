@@ -1,0 +1,185 @@
+:root {
+  color-scheme: light dark;
+  --paper: #f8f4ed;
+  --surface: #fffdf8;
+  --ink: #241d1b;
+  --muted: #5e514a;
+  --line: #c9bcb0;
+  --accent: #76252a;
+  --accent-ink: #fffdf8;
+  --active: #f0e4d4;
+  --focus: #4f1830;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --paper: #1d1917;
+    --surface: #29231f;
+    --ink: #fbf3e8;
+    --muted: #d0c1b2;
+    --line: #78695d;
+    --accent: #e8a6aa;
+    --accent-ink: #281214;
+    --active: #443229;
+    --focus: #f4d49c;
+  }
+}
+
+* { box-sizing: border-box; }
+[hidden] { display: none !important; }
+html { scroll-behavior: auto; }
+body {
+  margin: 0;
+  padding-bottom: 11rem;
+  background: var(--paper);
+  color: var(--ink);
+  font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+  line-height: 1.55;
+}
+button, select { font: inherit; }
+button, a, select { -webkit-tap-highlight-color: transparent; }
+:focus-visible { outline: 3px solid var(--focus); outline-offset: 3px; }
+a { color: inherit; }
+
+.skip-link {
+  position: fixed;
+  z-index: 5;
+  top: 0.5rem;
+  left: 0.5rem;
+  padding: 0.75rem 1rem;
+  background: var(--surface);
+  transform: translateY(-150%);
+}
+.skip-link:focus { transform: none; }
+
+.site-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  max-width: 760px;
+  margin: auto;
+  padding: 1rem 1.25rem;
+}
+.site-home {
+  display: inline-flex;
+  align-items: center;
+  min-height: 48px;
+  font-size: 1rem;
+  text-decoration: none;
+}
+.quiet-button, .return-button {
+  min-height: 52px;
+  padding: 0.7rem 1rem;
+  border: 1px solid var(--line);
+  border-radius: 0.65rem;
+  background: var(--surface);
+  color: var(--ink);
+  cursor: pointer;
+}
+
+main { max-width: 760px; margin: auto; padding: 0 1.25rem; }
+.liturgy-header { padding: 1.2rem 0 2.8rem; }
+.eyebrow {
+  margin: 0 0 0.6rem;
+  color: var(--accent);
+  font-size: 0.9rem;
+  font-weight: 700;
+  letter-spacing: 0.025em;
+}
+h1, h2 { font-family: Georgia, "Times New Roman", serif; font-weight: 500; line-height: 1.2; }
+h1 { max-width: 19ch; margin: 0 0 1rem; font-size: clamp(2rem, 7vw, 3rem); }
+h2 { margin: 0 0 0.45rem; font-size: clamp(1.7rem, 6vw, 2.25rem); }
+.liturgy-header > p:not(.eyebrow) { max-width: 44ch; margin: 0 0 1.2rem; color: var(--muted); font-size: 1.12rem; }
+.source-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  min-height: 52px;
+  padding: 0.65rem 0;
+  color: var(--accent);
+  font-size: 1.05rem;
+  font-weight: 600;
+  text-underline-offset: 0.22em;
+}
+.reading-section { padding-bottom: 2rem; }
+.section-heading { padding-bottom: 1.3rem; border-bottom: 1px solid var(--line); }
+.section-subtitle { margin: 0; color: var(--muted); font-size: 1.1rem; }
+.verses { padding-top: 0.65rem; }
+.verse {
+  position: relative;
+  margin: 1rem 0;
+  padding: 1.15rem 1rem 1.25rem 1.3rem;
+  border-left: 5px solid transparent;
+  border-radius: 0 0.8rem 0.8rem 0;
+}
+.verse[aria-current="true"] { border-left-color: var(--accent); background: var(--active); }
+.verse p { margin: 0 0 0.7rem; }
+.verse p:last-child { margin-bottom: 0; }
+.verse .current-label { display: none; margin-bottom: 0.4rem; color: var(--accent); font-size: 0.95rem; font-weight: 700; }
+.verse[aria-current="true"] .current-label { display: block; }
+.tibetan { font-family: "Noto Serif Tibetan", "Microsoft Himalaya", "Kailasa", serif; font-size: 2rem; line-height: 1.85; overflow-wrap: anywhere; }
+.phonetics { font-size: 1.4rem; line-height: 1.55; overflow-wrap: anywhere; }
+.english { font-size: 1.4rem; line-height: 1.55; overflow-wrap: anywhere; }
+.larger-text .tibetan { font-size: 2.45rem; }
+.larger-text .phonetics, .larger-text .english { font-size: 1.75rem; }
+.return-button {
+  position: fixed;
+  z-index: 4;
+  bottom: 8rem;
+  left: 50%;
+  width: max-content;
+  max-width: calc(100vw - 2rem);
+  transform: translateX(-50%);
+  box-shadow: 0 0.4rem 1.4rem rgb(0 0 0 / 15%);
+}
+
+.source-credit { max-width: 62ch; padding: 2rem 0 1rem; border-top: 1px solid var(--line); color: var(--muted); font-size: 0.95rem; }
+.source-credit p { margin: 0 0 0.9rem; }
+
+.player {
+  position: fixed;
+  z-index: 3;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  padding: 0.8rem max(1rem, env(safe-area-inset-right)) max(0.75rem, env(safe-area-inset-bottom));
+  border-top: 1px solid var(--line);
+  background: var(--surface);
+  box-shadow: 0 -0.5rem 1.8rem rgb(0 0 0 / 7%);
+}
+.player-inner { display: flex; align-items: end; gap: 0.75rem; max-width: 720px; margin: auto; }
+.section-control { display: grid; gap: 0.2rem; flex: 1 1 auto; min-width: 0; font-size: 0.85rem; font-weight: 600; }
+.section-control select {
+  width: 100%;
+  min-height: 60px;
+  padding: 0.55rem 0.8rem;
+  border: 1px solid var(--line);
+  border-radius: 0.65rem;
+  background: var(--paper);
+  color: var(--ink);
+  font-size: 1.1rem;
+}
+.play-button {
+  flex: 0 0 min(36%, 200px);
+  min-height: 60px;
+  padding: 0.5rem 1rem;
+  border: 1px solid var(--accent);
+  border-radius: 0.65rem;
+  background: var(--accent);
+  color: var(--accent-ink);
+  font-size: 1.3rem;
+  font-weight: 700;
+  cursor: pointer;
+}
+.player-status { max-width: 720px; margin: 0.45rem auto 0; color: var(--muted); font-size: 0.9rem; }
+
+@media (max-width: 420px) {
+  .site-header, main { padding-right: 1rem; padding-left: 1rem; }
+  .liturgy-header { padding-bottom: 2rem; }
+  .verse { padding-right: 0.45rem; padding-left: 0.9rem; }
+  .tibetan { font-size: 1.9rem; }
+  .phonetics, .english { font-size: 1.32rem; }
+  .larger-text .tibetan { font-size: 2.25rem; }
+  .larger-text .phonetics, .larger-text .english { font-size: 1.6rem; }
+}
