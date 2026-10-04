@@ -1,7 +1,7 @@
 "use strict";
 
 const data = window.DORJE_READER_DATA;
-const sections = data.sections;
+let sections = data.sections;
 const elements = {
   audio: document.querySelector("#recording"),
   select: document.querySelector("#section-select"),
@@ -13,6 +13,12 @@ const elements = {
   status: document.querySelector("#player-status"),
   size: document.querySelector("#text-size"),
   return: document.querySelector("#return-to-verse"),
+  lineage: document.querySelector("#include-lineage"),
+  previous: document.querySelector("#previous-section"),
+  next: document.querySelector("#next-section"),
+  note: document.querySelector("#recording-note"),
+  source: document.querySelector("#section-source"),
+  player: document.querySelector(".player"),
 };
 
 let sectionIndex = 0;
@@ -37,6 +43,7 @@ function renderVerse(phrase) {
   const current = makeText("span", "current-label", "Current verse");
   current.setAttribute("aria-hidden", "true");
   verse.append(current);
+  if (phrase.marker) verse.append(makeText("p", "recitation-label", phrase.marker));
 
   const tibetan = makeText("p", "tibetan", phrase.tibetan);
   tibetan.lang = "bo";
@@ -52,6 +59,15 @@ function renderVerse(phrase) {
   return verse;
 }
 
+function updateNavigation() {
+  const section = sections[sectionIndex];
+  elements.select.value = section.id;
+  elements.position.textContent = `Step ${sectionIndex + 1} of ${sections.length} · ${section.group}`;
+  elements.previous.disabled = sectionIndex === 0;
+  elements.next.disabled = sectionIndex === sections.length - 1;
+  elements.next.textContent = section.optional ? "Skip lineage" : "Next";
+}
+
 function setSection(index, { scroll = true } = {}) {
   if (!Number.isInteger(index) || index < 0 || index >= sections.length) return;
   elements.audio.pause();
@@ -61,11 +77,12 @@ function setSection(index, { scroll = true } = {}) {
   elements.return.hidden = true;
 
   const section = sections[index];
-  elements.select.value = section.id;
-  elements.position.textContent = `Reflection ${index + 1} of ${sections.length}`;
+  updateNavigation();
   elements.title.textContent = section.title;
   elements.subtitle.textContent = section.subtitle;
   elements.verses.replaceChildren(...section.phrases.map(renderVerse));
+  elements.note.hidden = section.phrases.length > 0;
+  elements.source.href = section.sourcePdf || data.sourcePdf;
   elements.audio.src = `media/${encodeURIComponent(section.recording)}`;
   elements.audio.load();
   elements.play.textContent = "Play";
@@ -99,7 +116,7 @@ function updateReturnButton() {
     return;
   }
   const bounds = activeVerse().getBoundingClientRect();
-  elements.return.hidden = bounds.bottom >= 0 && bounds.top <= window.innerHeight - 135;
+  elements.return.hidden = bounds.bottom >= 0 && bounds.top <= elements.player.getBoundingClientRect().top;
 }
 
 function updateActivePhrase() {
@@ -114,20 +131,63 @@ function updateActivePhrase() {
 }
 
 async function beginPlayback() {
+  if (elements.audio.error) elements.audio.load();
   if (elements.audio.ended) elements.audio.currentTime = 0;
   try {
     await elements.audio.play();
-  } catch {
-    setStatus("Playback could not start. Try Play again.");
+  } catch (error) {
+    // Selecting another recording can cancel a pending play request.
+    if (error.name !== "AbortError") setStatus("Playback could not start. Try Play again.");
   }
 }
 
-elements.select.replaceChildren(...sections.map((section) => {
-  const option = document.createElement("option");
-  option.value = section.id;
-  option.textContent = section.title;
-  return option;
-}));
+function renderSectionOptions() {
+  const groups = [];
+  sections.forEach((section, index) => {
+    let group = groups[groups.length - 1];
+    if (!group || group.label !== section.group) {
+      group = document.createElement("optgroup");
+      group.label = section.group;
+      groups.push(group);
+    }
+    const option = document.createElement("option");
+    option.value = section.id;
+    option.textContent = `${index + 1}. ${section.title}${section.optional ? " (optional)" : ""}`;
+    group.append(option);
+  });
+  elements.select.replaceChildren(...groups);
+}
+
+function moveSection(offset) {
+  const index = sectionIndex + offset;
+  if (index < 0 || index >= sections.length) return;
+  const wasPlaying = !elements.audio.paused && !elements.audio.ended;
+  setSection(index);
+  if (wasPlaying) beginPlayback();
+}
+
+elements.lineage.addEventListener("change", () => {
+  const currentId = sections[sectionIndex].id;
+  const wasPlaying = !elements.audio.paused && !elements.audio.ended;
+  try {
+    localStorage.setItem("dorje-include-lineage", String(elements.lineage.checked));
+  } catch { /* The choice still works for this visit without storage. */ }
+  sections = data.sections.filter((section) => elements.lineage.checked || !section.optional);
+  renderSectionOptions();
+  const currentIndex = sections.findIndex((section) => section.id === currentId);
+  if (currentIndex >= 0) {
+    // Changing the sequence must not restart the recording currently playing.
+    sectionIndex = currentIndex;
+    updateNavigation();
+  } else {
+    // Turning off the lineage while it is selected moves to the first reflection.
+    setSection(sections.findIndex((section) => section.id === "reflection-one"), { scroll: false });
+    if (wasPlaying) beginPlayback();
+  }
+});
+
+elements.previous.addEventListener("click", () => moveSection(-1));
+elements.next.addEventListener("click", () => moveSection(1));
 
 elements.select.addEventListener("change", () => {
   setSection(sections.findIndex((section) => section.id === elements.select.value));
@@ -149,14 +209,15 @@ elements.audio.addEventListener("pause", () => {
 });
 elements.audio.addEventListener("ended", () => {
   if (sectionIndex === sections.length - 1) {
-    setStatus("All six reflections finished.");
+    elements.play.textContent = "Play again";
+    setStatus("Practice complete · Final dedication finished.");
     return;
   }
   setSection(sectionIndex + 1);
   beginPlayback();
 });
 elements.audio.addEventListener("error", () => {
-  setStatus("This recording could not be loaded. The text is still available.");
+  setStatus("This recording could not be loaded. Try Play again, or use Next to continue.");
 });
 
 function turnOffFollow() {
@@ -170,6 +231,12 @@ window.addEventListener("keydown", (event) => {
 });
 window.addEventListener("scroll", updateReturnButton, { passive: true });
 window.addEventListener("resize", updateReturnButton);
+
+// Keep the reader and its return button above the player when labels wrap.
+new ResizeObserver(() => {
+  document.documentElement.style.setProperty("--player-height", `${elements.player.getBoundingClientRect().height}px`);
+  updateReturnButton();
+}).observe(elements.player);
 
 function setLargeText(large) {
   document.documentElement.classList.toggle("larger-text", large);
@@ -185,4 +252,9 @@ elements.size.addEventListener("click", () => {
   setLargeText(largeText);
 });
 
+try {
+  elements.lineage.checked = localStorage.getItem("dorje-include-lineage") !== "false";
+} catch { /* Include the optional chant by default when storage is unavailable. */ }
+sections = data.sections.filter((section) => elements.lineage.checked || !section.optional);
+renderSectionOptions();
 setSection(0, { scroll: false });

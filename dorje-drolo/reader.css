@@ -9,6 +9,7 @@
   --accent-ink: #fffdf8;
   --active: #f0e4d4;
   --focus: #4f1830;
+  --player-height: 210px;
 }
 
 @media (prefers-color-scheme: dark) {
@@ -30,7 +31,7 @@
 html { scroll-behavior: auto; }
 body {
   margin: 0;
-  padding-bottom: 11rem;
+  padding-bottom: calc(var(--player-height) + 2rem);
   background: var(--paper);
   color: var(--ink);
   font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
@@ -91,6 +92,9 @@ h1, h2 { font-family: Georgia, "Times New Roman", serif; font-weight: 500; line-
 h1 { max-width: 19ch; margin: 0 0 1rem; font-size: clamp(2rem, 7vw, 3rem); }
 h2 { margin: 0 0 0.45rem; font-size: clamp(1.7rem, 6vw, 2.25rem); }
 .liturgy-header > p:not(.eyebrow) { max-width: 44ch; margin: 0 0 1.2rem; color: var(--muted); font-size: 1.12rem; }
+.practice-option { display: flex; align-items: center; gap: 0.8rem; min-height: 52px; margin-top: 0.8rem; cursor: pointer; }
+.practice-option input { flex: 0 0 24px; width: 24px; height: 24px; margin: 0; accent-color: var(--accent); }
+.liturgy-header > .option-help { margin: 0.2rem 0 0 2.3rem; font-size: 0.95rem; }
 .source-link {
   display: inline-flex;
   align-items: center;
@@ -105,6 +109,8 @@ h2 { margin: 0 0 0.45rem; font-size: clamp(1.7rem, 6vw, 2.25rem); }
 .reading-section { padding-bottom: 2rem; }
 .section-heading { padding-bottom: 1.3rem; border-bottom: 1px solid var(--line); }
 .section-subtitle { margin: 0; color: var(--muted); font-size: 1.1rem; }
+.recording-note { padding: 1rem 0; color: var(--muted); font-size: 1.1rem; }
+.recording-note p { margin: 0 0 0.5rem; }
 .verses { padding-top: 0.65rem; }
 .verse {
   position: relative;
@@ -117,6 +123,7 @@ h2 { margin: 0 0 0.45rem; font-size: clamp(1.7rem, 6vw, 2.25rem); }
 .verse p { margin: 0 0 0.7rem; }
 .verse p:last-child { margin-bottom: 0; }
 .verse .current-label { display: none; margin-bottom: 0.4rem; color: var(--accent); font-size: 0.95rem; font-weight: 700; }
+.verse .recitation-label { color: var(--muted); font-size: 0.95rem; font-weight: 600; }
 .verse[aria-current="true"] .current-label { display: block; }
 .tibetan { font-family: "Noto Serif Tibetan", "Microsoft Himalaya", "Kailasa", serif; font-size: 2rem; line-height: 1.85; overflow-wrap: anywhere; }
 .phonetics { font-size: 1.4rem; line-height: 1.55; overflow-wrap: anywhere; }
@@ -126,7 +133,7 @@ h2 { margin: 0 0 0.45rem; font-size: clamp(1.7rem, 6vw, 2.25rem); }
 .return-button {
   position: fixed;
   z-index: 4;
-  bottom: 8rem;
+  bottom: calc(var(--player-height) + 0.75rem);
   left: 50%;
   width: max-content;
   max-width: calc(100vw - 2rem);
@@ -161,7 +168,6 @@ h2 { margin: 0 0 0.45rem; font-size: clamp(1.7rem, 6vw, 2.25rem); }
   font-size: 1.1rem;
 }
 .play-button {
-  flex: 0 0 min(36%, 200px);
   min-height: 60px;
   padding: 0.5rem 1rem;
   border: 1px solid var(--accent);
@@ -173,6 +179,9 @@ h2 { margin: 0 0 0.45rem; font-size: clamp(1.7rem, 6vw, 2.25rem); }
   cursor: pointer;
 }
 .player-status { max-width: 720px; margin: 0.45rem auto 0; color: var(--muted); font-size: 0.9rem; }
+.section-navigation { display: grid; grid-template-columns: 1fr 1.2fr 1fr; gap: 0.75rem; max-width: 720px; margin: 0.6rem auto 0; }
+.section-navigation button { min-width: 0; min-height: 52px; padding: 0.4rem 0.75rem; }
+button:disabled { opacity: 0.45; cursor: default; }
 
 @media (max-width: 420px) {
   .site-header, main { padding-right: 1rem; padding-left: 1rem; }

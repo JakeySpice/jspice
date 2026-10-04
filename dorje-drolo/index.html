@@ -5,11 +5,12 @@
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <meta name="robots" content="noindex, nofollow, noarchive" />
     <meta name="theme-color" content="#f8f4ed" />
-    <meta name="description" content="Read and listen to the six recorded reflections from the Dorje Drolö foundational practice liturgy." />
+    <meta name="description" content="Follow the Dorje Drolö practice sequence, from opening refuge and bodhicitta through the six reflections, prostrations, and closing dedications." />
     <title>Dorje Drolö practice | jspice.au</title>
-    <link rel="stylesheet" href="reader.css" />
-    <script src="reader-data.js" defer></script>
-    <script src="reader.js" defer></script>
+    <link rel="stylesheet" href="reader.css?v=20261004-sequence" />
+    <script src="content.js?v=20261004-sequence" defer></script>
+    <script src="reader-data.js?v=20261004-sequence" defer></script>
+    <script src="reader.js?v=20261004-sequence" defer></script>
   </head>
   <body>
     <a class="skip-link" href="#reading">Skip to reading</a>
@@ -23,8 +24,13 @@
       <header class="liturgy-header">
         <p class="eyebrow">Dorje Drolö · foundational practice</p>
         <h1>The Perfectly Clear Path to Liberation</h1>
-        <p>Read and listen to the six recorded reflections. The full liturgy is available below.</p>
+        <p>Play through your practice in order, from the opening chants to the final dedication.</p>
         <a class="source-link" href="media/Dorje%20Drolo%20Ngondro%20Liturgy-Final%20(04-25)2.0-en_US.pdf" target="_blank" rel="noopener">Open complete liturgy (PDF) <span aria-hidden="true">↗</span></a>
+        <label class="practice-option" for="include-lineage">
+          <input id="include-lineage" type="checkbox" checked aria-describedby="lineage-help" />
+          <span>Include Kagyu lineage supplication</span>
+        </label>
+        <p id="lineage-help" class="option-help">Optional. Your choice is saved on this device.</p>
       </header>
 
       <section class="reading-section" aria-labelledby="section-title">
@@ -32,6 +38,10 @@
           <p id="section-position" class="eyebrow"></p>
           <h2 id="section-title"></h2>
           <p id="section-subtitle" class="section-subtitle"></p>
+        </div>
+        <div id="recording-note" class="recording-note" hidden>
+          <p>Listen here and follow the text in the liturgy. Verse highlighting is not yet available for this recording.</p>
+          <a id="section-source" class="source-link" target="_blank" rel="noopener">Open text in the liturgy (PDF) ↗</a>
         </div>
         <div id="verses" class="verses"></div>
         <button id="return-to-verse" class="return-button" type="button" hidden>Return to current verse</button>
@@ -42,6 +52,7 @@
         <p>© 2025 Tergar International. Some rights reserved.<br>The Perfectly Clear Path to Liberation, by Khenpo Karma Ratna, version 2.0<br>Translated by Cortland Dahl and Michele Martin. Tibetan and phonetics by Altaír Peredo.</p>
         <p>This work is published under the Creative Commons Attribution-Noncommercial-No Derivative Works 3.0 United States License. If republishing this work, this copyright statement must be included in its entirety, including the contact information that follows.</p>
         <p>For more information, please contact:<br>Tergar International<br>info@tergar.org<br>www.tergar.org</p>
+        <p>The opening refuge and bodhicitta, four immeasurables, Kagyu supplication, and final short dedication use <a href="media/Tergar%20Daily%20Chants%202026.pdf" target="_blank" rel="noopener">Tergar Daily Chants (PDF)</a>, Tergar Asia Foundation, 22 May 2026 edition.</p>
       </footer>
     </main>
 
@@ -49,10 +60,14 @@
       <div class="player-inner">
         <label class="section-control" for="section-select">
           <span>Section</span>
-          <select id="section-select" aria-label="Choose a reflection"></select>
+          <select id="section-select" aria-label="Choose a practice section"></select>
         </label>
-        <button id="play-pause" class="play-button" type="button">Play</button>
       </div>
+      <nav class="section-navigation" aria-label="Practice sequence">
+        <button id="previous-section" class="quiet-button" type="button">Previous</button>
+        <button id="play-pause" class="play-button" type="button">Play</button>
+        <button id="next-section" class="quiet-button" type="button">Next</button>
+      </nav>
       <p id="player-status" class="player-status" role="status" aria-live="polite">Ready to play</p>
     </div>
     <audio id="recording" preload="metadata"></audio>
