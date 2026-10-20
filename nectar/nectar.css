@@ -1,0 +1,15 @@
+/* The Dorje Drolö reader supplies the palette, type, reading width and player. */
+.practice-settings{border-top:1px solid var(--line);border-bottom:1px solid var(--line);padding:1rem 0;margin-top:1rem}
+summary{cursor:pointer;color:var(--accent);font-weight:600;min-height:30px}
+.settings-body{padding:.4rem 0 1rem}.settings-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:1rem 1.25rem;margin:1rem 0}
+.settings-grid label{display:grid;align-content:start;gap:.4rem;font-weight:600;font-size:.95rem}.settings-grid label span{font-size:.85rem;font-weight:400;color:var(--muted)}
+input,select{font:inherit;color:var(--ink);background:var(--surface);border:1px solid var(--line);border-radius:.6rem;padding:.7rem;min-height:48px;max-width:100%;width:100%}
+input:disabled{opacity:.5}fieldset{border:1px solid var(--line);border-radius:.6rem;margin:1rem 0;padding:.5rem 1rem}legend{color:var(--accent);font-weight:600;padding:0 .4rem}
+.option-help{color:var(--muted);font-size:.92rem;line-height:1.6}.liturgy-header>.option-help{margin:0}.phonetic{font-size:1.4rem;line-height:1.55;overflow-wrap:anywhere}.larger-text .phonetic{font-size:1.75rem}
+.verse.instruction{color:var(--muted);font-style:italic;padding-left:0;border-left:0}.verse.instruction .english{font-size:1.05rem}.verse .phonetic{font-weight:500}.verse p{white-space:pre-line}
+.timer-panel{margin:1.4rem 0;padding:1.5rem;border:1px solid var(--line);border-radius:.8rem;background:var(--surface);text-align:center}.timer{font:3rem/1.2 Georgia,serif;font-variant-numeric:tabular-nums;margin:.8rem}.timer-panel button{min-width:180px}
+.player-timing{display:flex;align-items:center;gap:.75rem;max-width:720px;margin:.65rem auto 0;font-size:.8rem;color:var(--muted)}.progress{height:3px;flex:1;background:var(--line);overflow:hidden}.progress div{height:100%;background:var(--accent);width:0}#sourceRange{display:none}#attribution{white-space:pre-line}#loopInfo:empty,#reviewNote:empty{display:none}
+@media(max-width:520px){.settings-grid{grid-template-columns:1fr}fieldset{padding:.5rem .7rem}.phonetic{font-size:1.32rem}.larger-text .phonetic{font-size:1.6rem}.liturgy-header{padding-top:.8rem}.section-navigation{gap:.5rem}.section-navigation .play-button{font-size:1.1rem}}
+.chant-options{display:flex;flex-wrap:wrap;gap:.6rem;margin:.6rem 0}.chant-options button{min-height:48px;min-width:120px}.chant-options [aria-pressed="true"]{background:var(--accent);color:var(--surface);border-color:var(--accent)}
+.chant-controls{display:flex;align-items:center;justify-content:center;gap:.8rem;flex-wrap:wrap;margin:0 auto .7rem;max-width:720px}.chant-controls[hidden]{display:none}.chant-controls button{min-height:48px;min-width:160px}.chant-controls .option-help{font-size:.85rem}
+@media(max-width:520px){.chant-controls{gap:.3rem}.chant-controls .option-help{width:100%;text-align:center;font-size:.8rem}}

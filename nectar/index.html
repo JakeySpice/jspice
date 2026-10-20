@@ -1,0 +1,75 @@
+<!doctype html>
+<html lang="en-AU">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="robots" content="noindex, nofollow, noarchive">
+  <meta name="theme-color" content="#f8f4ed">
+  <title>Nectar of the Path | jspice.au</title>
+  <link rel="stylesheet" href="reader.css">
+  <link rel="stylesheet" href="nectar.css">
+  <script src="practice-data.js" defer></script>
+  <script src="app.js" defer></script>
+  <script src="reader.js" defer></script>
+</head>
+<body data-simple-chanting="true">
+  <a class="skip-link" href="#reading">Skip to reading</a>
+  <header class="site-header">
+    <a class="site-home" href="/dorje-drolo/">← Dorje Drolö reader</a>
+    <button id="text-size" class="quiet-button" type="button" aria-pressed="false">Larger text</button>
+    <button id="theme" type="button" hidden>Light / dark</button>
+  </header>
+  <main id="reading">
+    <header class="liturgy-header">
+      <p class="eyebrow">A reminder for daily practice</p>
+      <h1>Nectar of the Path</h1>
+      <p>Chanted by Lama Yadie</p>
+      <details id="settings" class="practice-settings">
+        <summary>Practice settings</summary>
+        <div class="settings-body">
+          <div class="settings-grid">
+            <label for="brief">Pause after each thought <span>Seconds</span><input id="brief" type="number" min="0" max="3600" step="1"></label>
+            <label for="focus">Longer reflection<select id="focus"><option value="">No longer reflection</option></select></label>
+            <label for="focusMinutes">Longer reflection length <span>Minutes, at the selected thought</span><input id="focusMinutes" type="number" min="0" max="180" step="0.5"></label>
+            <label for="restMinutes">Rest before dedication <span>Minutes, after the resting verses</span><input id="restMinutes" type="number" min="0" max="180" step="0.5"></label>
+            <label for="gapMode">Finish reflection and rest<select id="gapMode"><option value="timer">When the timer ends</option><option value="manual">When I select Continue</option></select></label>
+            <label for="speed">Chanting speed<select id="speed"><option value="0.8">0.8×</option><option value="0.9">0.9×</option><option value="1">1×</option><option value="1.1">1.1×</option><option value="1.2">1.2×</option></select></label>
+          </div>
+          <fieldset><legend>Namo refuge prayer</legend>
+            <div class="chant-options" role="group" aria-label="Namo length">
+              <button id="namoShort" class="quiet-button" type="button" aria-pressed="true">Short — 3 cycles</button>
+              <button id="namoLonger" class="quiet-button" type="button" aria-pressed="false">Longer</button>
+            </div>
+            <p class="option-help">One cycle: Buddha, Dharma, Sangha. Choose Longer to chant until you are ready to finish.</p>
+          </fieldset>
+          <fieldset><legend>Lama khyeno</legend>
+            <div class="chant-options" role="group" aria-label="Lama khyeno length">
+              <button id="lamaShort" class="quiet-button" type="button" aria-pressed="true">Short</button>
+              <button id="lamaLonger" class="quiet-button" type="button" aria-pressed="false">Longer</button>
+            </div>
+            <p class="option-help">You can also choose to chant longer during the prayer.</p>
+          </fieldset>
+          <button id="reset" class="quiet-button" type="button">Return to the beginning</button>
+        </div>
+      </details>
+    </header>
+    <section class="reading-section" aria-labelledby="title">
+      <div class="section-heading"><p id="position" class="eyebrow"></p><h2 id="title">Loading practice…</h2><p id="phase" class="section-subtitle">Ready</p><p id="loopInfo" class="option-help"></p></div>
+      <div id="timerPanel" class="timer-panel" hidden><p id="timerLabel" class="eyebrow"></p><p id="timer" class="timer">0:00</p><p id="timerHint"></p><button id="continue" class="play-button" type="button">Continue</button></div>
+      <div id="verses" class="verses"></div>
+    </section>
+    <footer class="source-credit">
+      <details><summary>Text and attribution</summary><p id="attribution"></p></details>
+    </footer>
+    <nav id="sections" aria-label="Practice sections" hidden></nav>
+  </main>
+  <div class="player" aria-label="Audio controls">
+    <div id="chantControls" class="chant-controls" hidden><button id="extendChant" class="quiet-button" type="button" aria-pressed="false">Chant longer</button><span id="chantHint" class="option-help"></span></div>
+    <div class="player-inner"><label class="section-control" for="section-select"><span>Section</span><select id="section-select"></select></label></div>
+    <nav class="section-navigation" aria-label="Practice sequence"><button id="previous" class="quiet-button" type="button">Previous</button><button id="play" class="play-button" type="button">Begin practice</button><button id="next" class="quiet-button" type="button">Next</button></nav>
+    <div class="player-timing"><div class="progress" aria-hidden="true"><div id="progressFill"></div></div><span id="elapsed">0:00 / 0:00</span><span id="sourceRange"></span></div>
+    <p id="status" class="player-status" role="status" aria-live="polite">Ready to play</p>
+  </div>
+  <audio id="audio" preload="metadata"></audio>
+</body>
+</html>
